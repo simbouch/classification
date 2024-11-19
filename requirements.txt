@@ -1,0 +1,7 @@
+# Python dependencies for Loan Bank Eligibility Prediction project
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+joblib
