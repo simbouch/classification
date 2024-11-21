@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Status Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-predict {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-predict:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Loan Status Prediction</h1>
+        <form action="/predict" method="post">
+            {% for feature in features %}
+                <div class="form-group">
+                    <label for="{{ feature }}">{{ feature }}:</label>
+                    {% if feature in categorical_features %}
+                        <select id="{{ feature }}" name="{{ feature }}" class="form-control" required>
+                            {% if feature == 'Gender' %}
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            {% elif feature == 'Married' %}
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            {% elif feature == 'Dependents' %}
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3+">3+</option>
+                            {% elif feature == 'Education' %}
+                                <option value="Graduate">Graduate</option>
+                                <option value="Not Graduate">Not Graduate</option>
+                            {% elif feature == 'Self_Employed' %}
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            {% elif feature == 'Property_Area' %}
+                                <option value="Urban">Urban</option>
+                                <option value="Rural">Rural</option>
+                                <option value="Semiurban">Semiurban</option>
+                            {% elif feature == 'Credit_History' %}
+                                <option value="1.0">1.0</option>
+                                <option value="0.0">0.0</option>
+                            {% endif %}
+                        </select>
+                    {% else %}
+                        <input type="text" id="{{ feature }}" name="{{ feature }}" class="form-control" required>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-predict">Predict</button>
+        </form>
+        {% if prediction_text %}
+            <div class="result">
+                <h2>{{ prediction_text }}</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
