@@ -9,3 +9,5 @@ xgboost
 lightgbm
 joblib
 Flask
+# azure deployement
+gunicorn
